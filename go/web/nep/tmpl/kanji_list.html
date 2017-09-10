@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Kanji List</title>
+</head>
+<body>
+    <ul id="kanji">
+    {{range .}}
+        <li><a href="/kanji/{{.}}">{{.}}</a></li>
+    {{end}}
+    </ul>
+</body>
+</html>
