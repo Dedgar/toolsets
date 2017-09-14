@@ -11,8 +11,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	//	"strconv"
-	//	"strings"
+	//	"sort"
 )
 
 const (
@@ -51,9 +50,6 @@ func getShow(c echo.Context) error {
 	season := c.Param("season")
 	episode := c.Param("episode")
 
-	//	return c.String(http.StatusOK, show+season+episode)
-	//	c.SetParamNames("show")
-	//	c.SetParamValues(c.QueryParam("show"))
 	return c.Render(http.StatusOK, "episode_view.html", map[string]interface{}{
 		"show":    show,
 		"season":  season,
@@ -115,6 +111,7 @@ func getLevel(c echo.Context) error {
 
 }
 
+// GET /:selection/:level/:kanji
 func getKanji(c echo.Context) error {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
@@ -125,6 +122,50 @@ func getKanji(c echo.Context) error {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(c.Param("selection"), c.Param("level"))
+	// start list of all in level get
+	sqlQuery := "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE $1 = $2"
+	rows, err := db.Query(sqlQuery, c.Param("selection"), c.Param("level"))
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer rows.Close()
+
+	//var otherkanj []string
+	other_kanj := make(map[string]int)
+	kanj_index := make(map[int]string)
+
+	k_index := 0
+
+	for rows.Next() {
+		var kanj string
+		var von string
+		var vkun string
+		var transl string
+		var roma string
+		var rememb string
+		var jlpt string
+		var school string
+
+		if err := rows.Scan(&kanj, &von, &vkun, &transl, &roma, &rememb, &jlpt, &school); err != nil {
+			log.Fatal(err)
+		}
+
+		other_kanj[kanj] = k_index
+		kanj_index[k_index] = kanj
+		//otherkanj = append(otherkanj, kanj)
+		k_index++
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	//sort.Strings(otherkanj)
+
+	// start single kanji definition get
 
 	// ensure :kanji isn't used as an escaped query like "%e9%9b%a8"
 	uni_kanj, err := url.QueryUnescape(c.Param("kanji"))
@@ -133,12 +174,14 @@ func getKanji(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	sqlQuery := "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE kanj = $1"
-	row := db.QueryRow(sqlQuery, uni_kanj)
+	singleQuery := "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE kanj = $1"
+	row := db.QueryRow(singleQuery, uni_kanj)
 
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// for length of items found in query, make a map of numbers that map to kanji?
 
 	var kanj string
 	var von string
@@ -148,7 +191,12 @@ func getKanji(c echo.Context) error {
 	var rememb string
 	var jlpt string
 	var school string
-	//	var con_kanji string
+	var p_index int
+	var n_index int
+	var p_kanj string // find out about searching through maps by value instead of key tomorrow
+	var n_kanj string
+	var u_level string
+	var u_selection string
 
 	switch err := row.Scan(&kanj, &von, &vkun, &transl, &roma, &rememb, &jlpt, &school); err {
 	case sql.ErrNoRows:
@@ -157,24 +205,35 @@ func getKanji(c echo.Context) error {
 	case nil:
 		fmt.Println(kanj, von, vkun, transl, roma, rememb, jlpt, school)
 	default:
-		//  panic(err)
 		log.Fatal(err)
 	}
 
-	entry := map[string]string{
-		"kanj":   kanj,
-		"von":    von,
-		"vkun":   vkun,
-		"transl": transl,
-		"roma":   roma,
-		"rememb": rememb,
-		"jlpt":   jlpt,
-		"school": school,
-	}
-	//		entry = append(entry, Kanji{kanj, von, vkun, transl, roma, rememb, jlpt, school})
-	//entry = append(entry, kanj)
+	p_index = other_kanj[uni_kanj] - 1
+	n_index = other_kanj[uni_kanj] + 1
 
-	return c.Render(http.StatusOK, "flashcard.html", entry) // map[string]interface{}{
+	p_kanj = kanj_index[p_index]
+	n_kanj = kanj_index[n_index]
+
+	u_level = c.Param("level")
+	u_selection = c.Param("selection")
+
+	entry := map[string]string{
+		"kanj":        kanj,
+		"von":         von,
+		"vkun":        vkun,
+		"transl":      transl,
+		"roma":        roma,
+		"rememb":      rememb,
+		"jlpt":        jlpt,
+		"school":      school,
+		"p_kanj":      p_kanj,
+		"n_kanj":      n_kanj,
+		"u_level":     u_level,
+		"u_selection": u_selection,
+	}
+
+	// do some regex checking on values of :level and :selection
+	return c.Render(http.StatusOK, "flashcard.html", entry)
 }
 
 func main() {
@@ -195,10 +254,9 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.GET("/", getMain)
-	//e.GET("/watch/:show", getShow)
 	e.GET("/watch/:show/:season/:episode", getShow)
 	e.GET("/grade/:level", getLevel)
 	e.GET("/jlpt/:level", getLevel)
-	e.GET("/kanji/:kanji", getKanji)
+	e.GET("/kanji/:selection/:level/:kanji", getKanji)
 	e.Logger.Info(e.Start(":1323"))
 }

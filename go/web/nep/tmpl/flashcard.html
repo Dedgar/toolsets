@@ -8,5 +8,11 @@
         <li>{{.kanj}}</li>
         <li>{{.transl}}</li>
     </ul>
+    <form action="/kanji/{{.u_selection}}/{{.u_level}}/{{.p_kanj}}">
+    <input type="submit" value="Previous {{.p_kanj}}" />
+    </form>
+    <form action="/kanji/{{.u_selection}}/{.u_level}}/{{.n_kanj}}">
+    <input type="submit" value="Next {{.n_kanj}}" />
+    </form>
 </body>
 </html>
