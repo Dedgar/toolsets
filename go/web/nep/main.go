@@ -11,7 +11,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	//	"sort"
 )
 
 const (
@@ -21,17 +20,6 @@ const (
 	password = "agiridesu"
 	dbname   = "kanji"
 )
-
-//type Kanji struct {
-//	kanj   string
-//	von    string
-//	vkun   string
-//	transl string
-//	roma   string
-//	rememb string
-//	jlpt   string
-//	school string
-//}
 
 type Template struct {
 	templates *template.Template
@@ -122,10 +110,23 @@ func getKanji(c echo.Context) error {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(c.Param("selection"), c.Param("level"))
+
+	// ensure :kanji isn't used as an escaped query like "%e9%9b%a8"
+	uni_kanj, err := url.QueryUnescape(c.Param("kanji"))
+
+	//	fmt.Println(c.Param("selection"), c.Param("level"))
 	// start list of all in level get
-	sqlQuery := "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE $1 = $2"
-	rows, err := db.Query(sqlQuery, c.Param("selection"), c.Param("level"))
+
+	var sqlQuery string
+
+	switch c.Param("selection") {
+	case "grade":
+		sqlQuery = "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE school = $1"
+	case "jlpt":
+		sqlQuery = "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE jlpt = $1"
+	}
+	rows, err := db.Query(sqlQuery, c.Param("level"))
+	//	rows, err := db.Query(sqlQuery, c.Param("selection"), c.Param("level"))
 
 	if err != nil {
 		log.Fatal(err)
@@ -149,7 +150,19 @@ func getKanji(c echo.Context) error {
 		var jlpt string
 		var school string
 
-		if err := rows.Scan(&kanj, &von, &vkun, &transl, &roma, &rememb, &jlpt, &school); err != nil {
+		//		if err := rows.Scan(&kanj, &von, &vkun, &transl, &roma, &rememb, &jlpt, &school); err != nil {
+		//			log.Fatal(err)
+		//		}
+
+		switch err := rows.Scan(&kanj, &von, &vkun, &transl, &roma, &rememb, &jlpt, &school); err {
+		case sql.ErrNoRows:
+			// use a 404 here
+			fmt.Println("No rows were returned!")
+		case nil:
+			//fmt.Println("No problem desu!")
+			//fmt.Println(kanj, von, vkun, transl, roma, rememb, jlpt, school)
+		default:
+			fmt.Println("boo")
 			log.Fatal(err)
 		}
 
@@ -163,12 +176,7 @@ func getKanji(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	//sort.Strings(otherkanj)
-
 	// start single kanji definition get
-
-	// ensure :kanji isn't used as an escaped query like "%e9%9b%a8"
-	uni_kanj, err := url.QueryUnescape(c.Param("kanji"))
 
 	if err != nil {
 		log.Fatal(err)
@@ -181,8 +189,6 @@ func getKanji(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	// for length of items found in query, make a map of numbers that map to kanji?
-
 	var kanj string
 	var von string
 	var vkun string
@@ -193,7 +199,7 @@ func getKanji(c echo.Context) error {
 	var school string
 	var p_index int
 	var n_index int
-	var p_kanj string // find out about searching through maps by value instead of key tomorrow
+	var p_kanj string
 	var n_kanj string
 	var u_level string
 	var u_selection string
