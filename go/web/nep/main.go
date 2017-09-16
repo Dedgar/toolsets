@@ -45,6 +45,10 @@ func getShow(c echo.Context) error {
 	})
 }
 
+func getJapanese(c echo.Context) error {
+	return c.Render(http.StatusOK, "level_selection.html", "level_selection")
+}
+
 func getLevel(c echo.Context) error {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
@@ -56,7 +60,15 @@ func getLevel(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	sqlQuery := "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE school = $1"
+	var sqlQuery string
+
+	switch c.Param("selection") {
+	case "grade":
+		sqlQuery = "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE school = $1"
+	case "jlpt":
+		sqlQuery = "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE jlpt = $1"
+	}
+	//	sqlQuery := "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE school = $1"
 	rows, err := db.Query(sqlQuery, c.Param("level"))
 
 	if err != nil {
@@ -159,7 +171,6 @@ func getKanji(c echo.Context) error {
 			// use a 404 here
 			fmt.Println("No rows were returned!")
 		case nil:
-			//fmt.Println("No problem desu!")
 			//fmt.Println(kanj, von, vkun, transl, roma, rememb, jlpt, school)
 		default:
 			fmt.Println("boo")
@@ -214,11 +225,24 @@ func getKanji(c echo.Context) error {
 		log.Fatal(err)
 	}
 
+	num_items := len(other_kanj)
+
 	p_index = other_kanj[uni_kanj] - 1
 	n_index = other_kanj[uni_kanj] + 1
 
-	p_kanj = kanj_index[p_index]
-	n_kanj = kanj_index[n_index]
+	// if we're at the beginning of the map, previous should be the last item
+	if p_index < 0 {
+		p_kanj = kanj_index[num_items-1]
+	} else {
+		p_kanj = kanj_index[p_index]
+	}
+
+	// if we reach the end of the map, next should cycle back to the beginning
+	if n_index == num_items {
+		n_kanj = kanj_index[0]
+	} else {
+		n_kanj = kanj_index[n_index]
+	}
 
 	u_level = c.Param("level")
 	u_selection = c.Param("selection")
@@ -249,6 +273,7 @@ func main() {
 			"tmpl/flashcard.html",
 			"tmpl/header.html",
 			"tmpl/episode_view.html",
+			"tmpl/level_selection.html",
 			"tmpl/nep_recruit.html",
 			"tmpl/footer.html",
 			"tmpl/menubar.html",
@@ -261,8 +286,9 @@ func main() {
 	e.Use(middleware.Recover())
 	e.GET("/", getMain)
 	e.GET("/watch/:show/:season/:episode", getShow)
-	e.GET("/grade/:level", getLevel)
-	e.GET("/jlpt/:level", getLevel)
+	//	e.GET("/grade/:level", getLevel)
+	e.GET("/kanji", getJapanese)
+	e.GET("/kanji/:selection/:level", getLevel)
 	e.GET("/kanji/:selection/:level/:kanji", getKanji)
 	e.Logger.Info(e.Start(":1323"))
 }
