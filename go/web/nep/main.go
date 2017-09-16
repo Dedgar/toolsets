@@ -49,6 +49,7 @@ func getJapanese(c echo.Context) error {
 	return c.Render(http.StatusOK, "level_selection.html", "level_selection")
 }
 
+// GET /kanji/:selection/:level
 func getLevel(c echo.Context) error {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
@@ -68,7 +69,6 @@ func getLevel(c echo.Context) error {
 	case "jlpt":
 		sqlQuery = "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE jlpt = $1"
 	}
-	//	sqlQuery := "SELECT kanj, von, vkun, transl, roma, rememb, jlpt, school FROM info WHERE school = $1"
 	rows, err := db.Query(sqlQuery, c.Param("level"))
 
 	if err != nil {
@@ -78,7 +78,6 @@ func getLevel(c echo.Context) error {
 	defer rows.Close()
 
 	//entry := make(map[string]map[string]string)
-	//var entry []Kanji
 	var entry []string
 
 	for rows.Next() {
@@ -105,9 +104,15 @@ func getLevel(c echo.Context) error {
 
 	}
 
-	return c.Render(http.StatusOK, "kanji_list.html", entry) // map[string]interface{}{
-	//		"entry": entry,
-	//	})
+	selection := c.Param("selection")
+	level := c.Param("level")
+	entrymap := map[string]interface{}{"entry": entry, "selection": selection, "level": level}
+
+	return c.Render(http.StatusOK, "kanji_list.html", entrymap) //map[string]interface{}{
+	//	"entry":     entry,
+	//	"selection": selection,
+	//	"level":     level,
+	//})
 
 }
 

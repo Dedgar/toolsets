@@ -5,8 +5,8 @@
 </head>
 <body>
     <ul id="kanji">
-    {{range .}}
-        <li><a href="/kanji/{{.selection}}/{{.level}}/{{.kanj}}">{{.kanj}}</a></li>
+    {{range .entry}}
+        <li><a href="/kanji/{{$.selection}}/{{$.level}}/{{.}}">{{.}}</a></li>
     {{end}}
     </ul>
 </body>
