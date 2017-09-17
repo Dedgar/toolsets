@@ -11,6 +11,9 @@
         <li>{{.vkun}}</li>
         <li>{{.roma}}</li>
     </ul>
+    <audio controls autoload>
+      <source src="static/media/{{.kanji}}.mp3" type="audio/mpeg">
+    </audio>
     <form action="/kanji/{{.u_selection}}/{{.u_level}}/{{.p_kanj}}">
     <input type="submit" value="Previous {{.p_kanj}}" />
     </form>

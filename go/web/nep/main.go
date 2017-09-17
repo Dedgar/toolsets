@@ -225,7 +225,7 @@ func getKanji(c echo.Context) error {
 		// use a 404 here
 		fmt.Println("No rows were returned!")
 	case nil:
-		fmt.Println(kanj, von, vkun, transl, roma, rememb, jlpt, school)
+		//		fmt.Println(kanj, von, vkun, transl, roma, rememb, jlpt, school)
 	default:
 		log.Fatal(err)
 	}
