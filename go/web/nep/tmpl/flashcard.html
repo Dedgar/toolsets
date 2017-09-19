@@ -16,11 +16,11 @@
       <source src="/media/{{.kanj}}.mp3" type="audio/mpeg">
     </audio>
     <div id="db_navi">
-    <form>
-    <input type="submit" action="/kanji/{{.u_selection}}/{{.u_level}}/{{.p_kanj}}" value="Previous {{.p_kanj}}">
+    <form action="/kanji/{{.u_selection}}/{{.u_level}}/{{.p_kanj}}">
+    <input type="submit" value="Previous {{.p_kanj}}" />
     </form>
-    <form>
-    <input type="submit" action="/kanji/{{.u_selection}}/{{.u_level}}/{{.n_kanj}}" value="Next {{.n_kanj}}">
+    <form action="/kanji/{{.u_selection}}/{{.u_level}}/{{.n_kanj}}">
+    <input type="submit" value="Next {{.n_kanj}}" />
     </form>
     </div>
 </body>
