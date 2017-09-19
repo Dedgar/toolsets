@@ -11,14 +11,15 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "shino"
-	password = "agiridesu"
-	dbname   = "kanji"
+var (
+	host     = os.Getenv("POSTGRESQL_SERVICE_HOST")
+	port     = os.Getenv("POSTGRESQL_SERVICE_PORT")
+	user     = os.Getenv("POSTGRESQL_USER")
+	password = os.Getenv("POSTGRESQL_PASSWORD")
+	dbname   = os.Getenv("POSTGRESQL_DATABASE")
 )
 
 type Template struct {
@@ -33,6 +34,7 @@ func getMain(c echo.Context) error {
 	return c.Render(http.StatusOK, "nep_recruit.html", "main")
 }
 
+// GET /watch/:show/:season/:episode
 func getShow(c echo.Context) error {
 	show := c.Param("show")
 	season := c.Param("season")
@@ -51,7 +53,7 @@ func getJapanese(c echo.Context) error {
 
 // GET /kanji/:selection/:level
 func getLevel(c echo.Context) error {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
@@ -118,7 +120,7 @@ func getLevel(c echo.Context) error {
 
 // GET /:selection/:level/:kanji
 func getKanji(c echo.Context) error {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{{template "header.html"}}
 <html lang="en">
 <head>
     <title>Kanji View</title>
@@ -12,13 +13,16 @@
         <li>{{.roma}}</li>
     </ul>
     <audio controls autoload>
-      <source src="static/media/{{.kanji}}.mp3" type="audio/mpeg">
+      <source src="/media/{{.kanj}}.mp3" type="audio/mpeg">
     </audio>
-    <form action="/kanji/{{.u_selection}}/{{.u_level}}/{{.p_kanj}}">
-    <input type="submit" value="Previous {{.p_kanj}}" />
+    <div id="db_navi">
+    <form>
+    <input type="submit" action="/kanji/{{.u_selection}}/{{.u_level}}/{{.p_kanj}}" value="Previous {{.p_kanj}}">
     </form>
-    <form action="/kanji/{{.u_selection}}/{{.u_level}}/{{.n_kanj}}">
-    <input type="submit" value="Next {{.n_kanj}}" />
+    <form>
+    <input type="submit" action="/kanji/{{.u_selection}}/{{.u_level}}/{{.n_kanj}}" value="Next {{.n_kanj}}">
     </form>
+    </div>
 </body>
+{{template "footer.html"}}
 </html>
