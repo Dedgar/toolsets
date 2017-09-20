@@ -34,6 +34,20 @@ div#db_navi *{
   display:inline
 }
 
+ul#kanjilist{
+	columns: 4;
+  text-align: center;
+  font-size: 30px;
+}
+
+iframe {
+    display:block;
+    width: 1000px;
+    height: 500px;
+    margin: 0 auto;
+/*    background-color: #777;*/
+}
+
 /*///////////////////////////////////////
 gNavi
 ////////////////////////////////////////*/

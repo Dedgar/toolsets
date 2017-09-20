@@ -34,6 +34,10 @@ func getMain(c echo.Context) error {
 	return c.Render(http.StatusOK, "nep_recruit.html", "main")
 }
 
+func getContainer(c echo.Context) error {
+	return c.Render(http.StatusOK, "container.html", "container")
+}
+
 // GET /watch/:show/:season/:episode
 func getShow(c echo.Context) error {
 	show := c.Param("show")
@@ -278,6 +282,7 @@ func main() {
 		templates: template.Must(template.ParseFiles("tmpl/map.html",
 			"tmpl/kanji_list.html",
 			"tmpl/flashcard.html",
+			"tmpl/container.html",
 			"tmpl/header.html",
 			"tmpl/episode_view.html",
 			"tmpl/level_selection.html",
@@ -295,6 +300,9 @@ func main() {
 	e.GET("/watch/:show/:season/:episode", getShow)
 	//	e.GET("/grade/:level", getLevel)
 	e.GET("/kanji", getJapanese)
+	e.GET("/kanji/", getJapanese)
+	e.GET("/kanjitainer", getContainer)
+	e.GET("/kanjitainer/", getContainer)
 	e.GET("/kanji/:selection/:level", getLevel)
 	e.GET("/kanji/:selection/:level/:kanji", getKanji)
 	e.Logger.Info(e.Start(":1323"))
