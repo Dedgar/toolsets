@@ -48,6 +48,10 @@ iframe {
 /*    background-color: #777;*/
 }
 
+article#header{
+    padding: 10px;
+}
+
 /*///////////////////////////////////////
 gNavi
 ////////////////////////////////////////*/
@@ -467,49 +471,49 @@ ul#sideNavi .txt{
 
 #job1{
     width:100%;
-    background:url(../img/job1_bg.png) no-repeat fixed;
+    background:url(../img/placeholder_image.png) no-repeat fixed;
     background-position:center top;
     border-top:#cd61e4 5px solid;
 }
 #job2{
     width:100%;
-    background:url(../img/job2_bg.png) 50% 0 no-repeat fixed;
+    background:url(../img/placeholder_image.png) 50% 0 no-repeat fixed;
     border-top:#cd61e4 5px solid;
 }
 #job3{
     width:100%;
-    background:url(../img/job3_bg.png) 50% 0 no-repeat fixed;
+    background:url(../img/placeholder_image.png) 50% 0 no-repeat fixed;
     border-top:#cd61e4 5px solid;
 }
 
 #job4{
     width:100%;
     min-height:1000px;
-    background:url(../img/job4_bg.png) 50% 0 no-repeat fixed;
+    background:url(../img/placeholder_image.png) 50% 0 no-repeat fixed;
     border-top:#cd61e4 5px solid;
 }
 
 #job5{
     width:100%;
-    background:url(../img/job5_bg.png) 50% 0 no-repeat fixed;
+    background:url(../img/placeholder_image.png) 50% 0 no-repeat fixed;
     border-top:#cd61e4 5px solid;
 }
 
 #job6{
     width:100%;
-    background:url(../img/job6_bg.png) 50% 0 no-repeat fixed;
+    background:url(../img/placeholder_image.png) 50% 0 no-repeat fixed;
     border-top:#cd61e4 5px solid;
 }
 
 #job7{
     width:100%;
-    background:url(../img/job7_bg.png) 50% 0 no-repeat fixed;
+    background:url(../img/placeholder_image.png) 50% 0 no-repeat fixed;
     border-top:#cd61e4 5px solid;
 }
 
 #job8{
     width:100%;
-    background:url(../img/job8_bg.png) 50% 0 no-repeat fixed;
+    background:url(../img/placeholder_image.png) 50% 0 no-repeat fixed;
     border-top:#cd61e4 5px solid;
 }
 /*///////////////////////////////////////
@@ -741,49 +745,49 @@ ul#gNavi li a img{
 
 #job1{/*ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ¼/ãƒ‡ã‚£ãƒ¬ã‚¯ã‚¿ãƒ¼*/
     width:100%;
-    background:url(../img/job1_bg_s.png) no-repeat;
+    background:url(../img/placeholder_image_s.png) no-repeat;
     background-position:center top;
     border-top:#cd61e4 5px solid;
 }
 
 #job2{/*ãƒ—ãƒ©ãƒ³ãƒŠãƒ¼*/
     width:100%;
-    background:url(../img/job2_bg_s.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_s.png) 50% 0 no-repeat;
     border-top:#cd61e4 5px solid;
 }
 #job3{/*ã‚·ãƒŠãƒªã‚ªãƒ©ã‚¤ã‚¿ãƒ¼*/
     width:100%;
-    background:url(../img/job3_bg_s.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_s.png) 50% 0 no-repeat;
     border-top:#cd61e4 5px solid;
 }
 
 #job4{/*ãƒ—ãƒ­ã‚°ãƒ©ãƒžãƒ¼*/
     width:100%;
-    background:url(../img/job4_bg_s.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_s.png) 50% 0 no-repeat;
     border-top:#cd61e4 5px solid;
 }
 
 #job5{/*ã‚¢ãƒ¼ãƒˆãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼*/
     width:100%;
-    background:url(../img/job5_bg_s.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_s.png) 50% 0 no-repeat;
     border-top:#cd61e4 5px solid;
 }
 
 #job6{/*ï¼“Dãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼*/
     width:100%;
-    background:url(../img/job6_bg_s.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_s.png) 50% 0 no-repeat;
     border-top:#cd61e4 5px solid;
 }
 
 #job7{/*ãƒ ãƒ¼ãƒ“ãƒ¼ãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼*/
     width:100%;
-    background:url(../img/job7_bg_s.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_s.png) 50% 0 no-repeat;
     border-top:#cd61e4 5px solid;
 }
 
 #job8{
     width:100%;
-    background:url(../img/job8_bg_s.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_s.png) 50% 0 no-repeat;
     border-top:#cd61e4 5px solid;
 }
  
@@ -1075,34 +1079,34 @@ ul#sideNavi li:nth-child(odd) {
 
 
 #job1{/*ãƒ—ãƒ­ãƒ‡ãƒ¥ãƒ¼ã‚µãƒ¼/ãƒ‡ã‚£ãƒ¬ã‚¯ã‚¿ãƒ¼*/
-    background:url(../img/job1_bg_smp.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_smp.png) 50% 0 no-repeat;
 }
 
 #job2{/*ãƒ—ãƒ©ãƒ³ãƒŠãƒ¼*/
-    background:url(../img/job2_bg_smp.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_smp.png) 50% 0 no-repeat;
 }
 #job3{/*ã‚·ãƒŠãƒªã‚ªãƒ©ã‚¤ã‚¿ãƒ¼*/
-    background:url(../img/job3_bg_smp.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_smp.png) 50% 0 no-repeat;
 }
 
 #job4{/*ãƒ—ãƒ­ã‚°ãƒ©ãƒžãƒ¼*/
-    background:url(../img/job4_bg_smp.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_smp.png) 50% 0 no-repeat;
 }
 
 #job5{/*ã‚¢ãƒ¼ãƒˆãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼*/
-    background:url(../img/job5_bg_smp.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_smp.png) 50% 0 no-repeat;
 }
 
 #job6{/*ï¼“Dãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼*/
-    background:url(../img/job6_bg_smp.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_smp.png) 50% 0 no-repeat;
 }
 
 #job7{/*ãƒ ãƒ¼ãƒ“ãƒ¼ãƒ‡ã‚¶ã‚¤ãƒŠãƒ¼*/
-    background:url(../img/job7_bg_smp.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_smp.png) 50% 0 no-repeat;
 }
 
 #job8{
-    background:url(../img/job8_bg_smp.png) 50% 0 no-repeat;
+    background:url(../img/placeholder_image_smp.png) 50% 0 no-repeat;
 }
 
 .jobContents h2{

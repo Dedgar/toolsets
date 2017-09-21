@@ -53,7 +53,7 @@ body{
    position: relative;
 }
 
-a{color: #CB0058;}
+a{color: #CB0058; padding: 10px;}
 a:hover{color: #FF02BE;text-decoration: none;}
 .clear{clear: both;}
 

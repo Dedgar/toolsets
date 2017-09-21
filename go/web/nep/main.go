@@ -31,7 +31,7 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 }
 
 func getMain(c echo.Context) error {
-	return c.Render(http.StatusOK, "nep_recruit.html", "main")
+	return c.Render(http.StatusOK, "main.html", "main")
 }
 
 func getContainer(c echo.Context) error {
@@ -286,9 +286,8 @@ func main() {
 			"tmpl/header.html",
 			"tmpl/episode_view.html",
 			"tmpl/level_selection.html",
-			"tmpl/nep_recruit.html",
+			"tmpl/main.html",
 			"tmpl/footer.html",
-			"tmpl/menubar.html",
 		)),
 	}
 	e := echo.New()
