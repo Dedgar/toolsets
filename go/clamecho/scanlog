@@ -1,0 +1,22 @@
+{
+    "apiVersion": "v1alpha", 
+    "containerID": "07caee20a5dcf04bf78070a7f100770344f2d1e3fc2e0542bf5a9c8bc96d4067", 
+    "imageID": "sha256:348549493ddfd2eb0827c90738f2add96", 
+    "imageName": "", 
+    "results": [
+        {
+            "description": "Spammer.PHP.Private.B(Test).UNOFFICIAL FOUND", 
+            "name": "clamav", 
+            "reference": "file://root/.viminfo", 
+            "scannerVersion": "0.50.1", 
+            "timestamp": "2017-11-10T17:08:38.871064799Z"
+        }, 
+        {
+            "description": "Spammer.PHP.Private.B(Test).UNOFFICIAL FOUND", 
+            "name": "clamav", 
+            "reference": "file://root/test.py", 
+            "scannerVersion": "0.50.1", 
+            "timestamp": "2017-11-10T17:08:38.871064799Z"
+        }
+    ]
+}
