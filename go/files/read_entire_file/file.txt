@@ -1,0 +1,2 @@
+some_creds: hereis%&#%^&#along^*^&*$credstring
+some_key: AKafgdfgafh657854u45^7
